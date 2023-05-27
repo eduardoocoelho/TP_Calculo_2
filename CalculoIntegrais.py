@@ -18,11 +18,11 @@ def beggining_scream():
     ]
 
     column2 = [
-        [sg.Input(font='arial 12 bold', key='passo1', size=(30, 1))],
-        [sg.Input(font='arial 12 bold', key='passo2', size=(30, 1))],
-        [sg.Input(font='arial 12 bold', key='passo3', size=(30, 1))],
-        [sg.Input(font='arial 12 bold', key='passo4', size=(30, 1))],
-        [sg.Text(font = 'arial 15 bold', key='-OUT-', size=(20, 1))]
+        [sg.Text(font='arial 13 bold', key='-STEP1-', size=(20, 1))],
+        [sg.Text(font='arial 13 bold', key='-STEP2-', size=(20, 1))],
+        [sg.Text(font='arial 13 bold', key='-STEP3-', size=(20, 1))],
+        [sg.Text(font='arial 13 bold', key='-STEP4-', size=(20, 1))],
+        [sg.Text(font='arial 15 bold', key='-OUT-', size=(20, 1))]
     ]
 
     buttons = [
