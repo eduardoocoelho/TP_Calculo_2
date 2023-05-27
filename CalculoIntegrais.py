@@ -6,7 +6,7 @@ def beggining_scream():
     sg.theme('Dark2')
     integrals = [
         [sg.Text('Entre com a Integral:', font='arial 20', pad=(0, 0))],
-        [sg.Input(size=(20,0), font='arial 15', pad=(0, 0), key='integral')]
+        [sg.Input(size=(20,0), font='arial 15', pad=(0, 0), key='-FUNCTION-')]
     ]
 
     column1 = [
@@ -22,11 +22,11 @@ def beggining_scream():
         [sg.Input(font='arial 12 bold', key='passo2', size=(30, 1))],
         [sg.Input(font='arial 12 bold', key='passo3', size=(30, 1))],
         [sg.Input(font='arial 12 bold', key='passo4', size=(30, 1))],
-        [sg.Input(font='arial 12 bold', key='resultadoIntegral', size=(20, 1))],
+        [sg.Text(font = 'arial 15 bold', key='-OUT-', size=(20, 1))]
     ]
 
     buttons = [
-        [sg.Button('Calcular', font='arial 15', size=(10, 1), pad=((0, 15), 0)),
+        [sg.Button('Calcular', font='arial 15', size=(10, 1), pad=((0, 15), 0), key='-CALCULATE-'),
         sg.CButton('Sair', font='arial 15', size=(8, 1))]
     ]
 
@@ -46,10 +46,12 @@ beggining_scream()
 while True:
     window, events, values = sg.read_all_windows()
 
+    if events == "-CALCULATE-":
+        x = Symbol('x')
+        expr = apart(values['-FUNCTION-'])
+        result = str(integrate(expr, (x))).replace("log", "ln")
+        window['-OUT-'].update(result)
+
+
     if events == sg.WIN_CLOSED:
         break
-
-#x = Symbol('x')
-#f = ((x - 9) / ((x + 5) * (x - 2)))
-#expr = f.apart()
-#print(integrate(expr, (x)))
