@@ -82,8 +82,4 @@ while True:
     window['-OUT-'].update(result)
 
   if events == sg.WIN_CLOSED:
-    break    result = str(logcombine(result.expand(), force=true)).replace("log", "ln").replace("**", "^")
-    window['-OUT-'].update(result)
-
-  if events == sg.WIN_CLOSED:
     break
