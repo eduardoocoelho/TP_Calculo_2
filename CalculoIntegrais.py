@@ -5,14 +5,24 @@ import PySimpleGUI as sg
 def beggining_scream():
   #Theme
   sg.theme('Dark2')
-  integrals = [[sg.Text('Entre com a Integral:', font='arial 20', pad=(0, 0))],
+  integrals = [
+               [sg.Text('Entre com a Integral:', font='arial 20', pad=(0, 0))],
                [
                  sg.Text('∫', font='arial 40', pad=(0, 0)),
+                 sg.Input(size=(3, 0),
+                          font='arial 8',
+                          pad=(3, 0),
+                          key='-UPPER-'),
+                 sg.Input(size=(3, 0),
+                          font='arial 8',
+                          pad=(3, 0),
+                          key='-LOWER-'),
                  sg.Input(size=(20, 0),
                           font='arial 15',
                           pad=(0, 0),
                           key='-FUNCTION-')
-               ]]
+               ]
+              ]
 
   column1 = [[sg.Text('Resolução para chegar no passo n1: ', font='arial 12')],
              [sg.Text('Resolução para chegar no passo n2: ', font='arial 12')],
@@ -60,7 +70,10 @@ while True:
   if events == "-CALCULATE-":
     x = Symbol('x')
     expr = apart(values['-FUNCTION-'])
-    result = str(integrate(expr, (x))).replace("log", "ln").replace("**", "ˆ")
+    upper = apart(values['-UPPER-'])
+    lower = apart(values['-LOWER-'])
+    result = str(integrate(expr, (x, lower, upper))).replace("log",
+                                                     "ln").replace("**", "ˆ")
     window['-OUT-'].update(result)
 
   if events == sg.WIN_CLOSED:
