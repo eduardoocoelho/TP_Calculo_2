@@ -5,36 +5,39 @@ import PySimpleGUI as sg
 def beggining_scream():
   #Theme
   sg.theme('Dark2')
-  integrals = [
-               [sg.Text('Entre com a Integral:', font='arial 20', pad=(0, 0))],
-               [
-                 sg.Text('∫', font='arial 40', pad=(0, 0)),
-                 sg.Input(size=(3, 0),
-                          font='arial 8',
-                          pad=(3, 0),
-                          key='-UPPER-'),
-                 sg.Input(size=(3, 0),
-                          font='arial 8',
-                          pad=(3, 0),
-                          key='-LOWER-'),
-                 sg.Input(size=(20, 0),
-                          font='arial 15',
-                          pad=(0, 0),
-                          key='-FUNCTION-')
-               ]
-              ]
+  
+  integrals1 = [
 
-  column1 = [[sg.Text('Resolução para chegar no passo n1: ', font='arial 12')],
-             [sg.Text('Resolução para chegar no passo n2: ', font='arial 12')],
-             [sg.Text('Resolução para chegar no passo n3: ', font='arial 12')],
-             [sg.Text('Resolução para chegar no passo n4: ', font='arial 12')],
-             [sg.Text('Resultado da integral: ', font='arial 15')]]
+        [sg.Input(size=(2, 0),
+                justification='center',
+                enable_events=True,
+                font='arial 10 bold',
+                pad=(0, 30),
+                key='-UPPER-')
+        ],
 
-  column2 = [[sg.Text(font='arial 13 bold', key='-STEP1-', size=(20, 1))],
-             [sg.Text(font='arial 13 bold', key='-STEP2-', size=(20, 1))],
-             [sg.Text(font='arial 13 bold', key='-STEP3-', size=(20, 1))],
-             [sg.Text(font='arial 13 bold', key='-STEP4-', size=(20, 1))],
-             [sg.Text(font='arial 15 bold', key='-OUT-', size=(20, 1))]]
+        [sg.Input(size=(2, 0),
+                    justification='center',
+                    enable_events=True,
+                    font='arial 10 bold',
+                    pad=(0, 0),
+                    key='-LOWER-')
+        ]
+  ]
+
+  integrals2 = [   
+
+        [
+            sg.Text('∫', font='arial 40', pad=(0, 0)),
+            sg.Input(size=(30, 0),
+                    font='arial 15',
+                    pad=(0, 0),
+                    key='-FUNCTION-'),
+          sg.Text('dx', font='arial 20', pad=(5, 0))
+        ],
+    ]
+
+
 
   buttons = [[
     sg.Button('Calcular',
@@ -46,19 +49,20 @@ def beggining_scream():
   ]]
 
   layout = [[sg.Text('Calculadora De Integrais', font='arial 18 bold')],
+            [sg.Text('Entre com a Integral:', font='arial 15', pad=(0, 0))],
             [
-              sg.Column(integrals,
-                        justification='center',
-                        element_justification='center')
-            ], [sg.Column(column1, pad=((0, 20), 0)),
-                sg.Column(column2)],
+              [sg.Column(integrals1, justification='center'),
+               sg.Column(integrals2, justification='center')],
+            ], 
+            [sg.Text('Resultado da integral: ', font='arial 15')],
+            [sg.Text(font='arial 15 bold', key='-OUT-', size=(30, 1))],
             [sg.Column(buttons, justification='center')]]
 
   #Window
   window = sg.Window('CalculadoraDeIntegrais',
                      element_padding=(0, 10),
                      layout=layout,
-                     size=(600, 500),
+                     size=(700, 500),
                      finalize=True)
 
 
@@ -70,10 +74,15 @@ while True:
   if events == "-CALCULATE-":
     x = Symbol('x')
     expr = apart(values['-FUNCTION-'])
-    upper = apart(values['-UPPER-'])
-    lower = apart(values['-LOWER-'])
-    result = str(integrate(expr, (x, lower, upper))).replace("log",
-                                                     "ln").replace("**", "ˆ")
+    upper = values['-UPPER-']
+    lower = values['-LOWER-']
+    result = integrate(expr, (x, lower, upper))
+    result = factor(result)
+    result = str(logcombine(result.expand(), force=true)).replace("log", "ln").replace("**", "^")
+    window['-OUT-'].update(result)
+
+  if events == sg.WIN_CLOSED:
+    break    result = str(logcombine(result.expand(), force=true)).replace("log", "ln").replace("**", "^")
     window['-OUT-'].update(result)
 
   if events == sg.WIN_CLOSED:
