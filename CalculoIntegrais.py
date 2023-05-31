@@ -29,7 +29,7 @@ def beggining_scream():
 
         [
             sg.Text('∫', font='arial 40', pad=(0, 0)),
-            sg.Input(size=(30, 0),
+            sg.Input(size=(40, 0),
                     font='arial 15',
                     pad=(0, 0),
                     key='-FUNCTION-'),
@@ -62,7 +62,7 @@ def beggining_scream():
   window = sg.Window('CalculadoraDeIntegrais',
                      element_padding=(0, 10),
                      layout=layout,
-                     size=(700, 500),
+                     size=(700, 400),
                      finalize=True)
 
 
@@ -77,8 +77,7 @@ while True:
     upper = values['-UPPER-']
     lower = values['-LOWER-']
     result = integrate(expr, (x, lower, upper))
-    result = factor(result)
-    result = str(logcombine(result.expand(), force=true)).replace("log", "ln").replace("**", "^")
+    result = str(factor(result)).replace("log", "ln").replace("**", "^")
     window['-OUT-'].update(result)
 
   if events == sg.WIN_CLOSED:
